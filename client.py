@@ -5,7 +5,7 @@ import struct
 #HOST = ''  # Localhost
 HOST = '0.0.0.0'  
 PORT = 8080
-FULL_PATH_TO_FILE = "/root/Desktop/test/met.exe"
+FULL_PATH_TO_FILE = "/root/project/FreeSSHD.exe"
 
 print "\nName of file to upload:", FULL_PATH_TO_FILE
 
@@ -34,17 +34,22 @@ while 1:
     if not data: break
     print data
     conn.send(network_filesize_in_bytes)
-
     f = open(FULL_PATH_TO_FILE, 'rb')
-    l = f.read(1024)
-    while (l):
-            conn.send(l)
-            print('Sent ',repr(l))
-            l = f.read(1024)
+    tot_bytes_sent = 0
+    bytes_sent = 0
+    while (tot_bytes_sent < filesize_in_bytes):
+            l = f.read()
+	    if (l):
+                print "bytes_read from file: %i" ,len(l)
+            bytes_sent = conn.send(l)
+            tot_bytes_sent += bytes_sent
+            #print('Sent ',repr(l))
+            print "bytes_sent: %i", bytes_sent
 
     f.close()
     print('Done Sending')
 
-conn.close()
+    conn.close()
+
 
 
